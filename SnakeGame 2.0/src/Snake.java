@@ -1,3 +1,5 @@
+// Class responsible for snake control and snake's moving around
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -5,11 +7,18 @@ import java.awt.event.KeyListener;
 import javax.swing.Timer;
 
 
-public class Snake extends Board implements KeyListener, ActionListener{		// Jak siê pozbyæ dziedziczenia? 
+public class Snake extends Board implements KeyListener, ActionListener { 
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	private Timer timer;
 	private int delay = 150;
+	private boolean isActive = false;
 	
 	
 	public Snake()
@@ -23,8 +32,10 @@ public class Snake extends Board implements KeyListener, ActionListener{		// Jak
 
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {		// TODO resize board (down)
+	public void actionPerformed(ActionEvent e) {
 		timer.start();
+		isActive = true;
+		
 		if (right)
 		{
 			for (int i = snakeLength-1; i>=0; i--)
@@ -124,7 +135,7 @@ public class Snake extends Board implements KeyListener, ActionListener{		// Jak
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_D)
+		if (e.getKeyCode() == KeyEvent.VK_D)
 		{
 			moves++;
 			right = true;
@@ -142,7 +153,7 @@ public class Snake extends Board implements KeyListener, ActionListener{		// Jak
 			up = false;
 			down = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_A)
+		if (e.getKeyCode() == KeyEvent.VK_A)
 		{
 			moves++;
 			left = true;
@@ -160,7 +171,7 @@ public class Snake extends Board implements KeyListener, ActionListener{		// Jak
 			up = false;
 			down = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_W)
+		if (e.getKeyCode() == KeyEvent.VK_W)
 		{
 			moves++;
 			up = true;
@@ -178,7 +189,7 @@ public class Snake extends Board implements KeyListener, ActionListener{		// Jak
 			left = false;
 			right = false;
 		}
-		if(e.getKeyCode() == KeyEvent.VK_S)
+		if (e.getKeyCode() == KeyEvent.VK_S)
 		{
 			moves++;
 			down = true;
@@ -196,6 +207,24 @@ public class Snake extends Board implements KeyListener, ActionListener{		// Jak
 			left = false;
 			right = false;
 		}
+		if (e.getKeyCode() == KeyEvent.VK_R)
+		{
+			moves = 0;
+			score = 0;
+			snakeLength = 3;
+			repaint();
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE)
+		{
+			if (isActive)
+			{
+				timer.stop();
+				isActive = false;
+			}
+			else
+				timer.start();
+		}
+		
 		
 	}
 
